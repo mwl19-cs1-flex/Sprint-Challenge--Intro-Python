@@ -1,6 +1,15 @@
 # Create a class to hold a city location. Call the class "City". It should have
 # fields for name, lat and lon (representing latitude and longitude).
+import csv
 
+class City:
+  def __init__(self, name, lat, lon):
+    self.name = name
+    self.lat = lat
+    self.lon = lon
+
+  def __str__(self):
+    return f'{self.name}, {self.lat}, {self.lon}'
 
 # We have a collection of US cities with population over 750,000 stored in the
 # file "cities.csv". (CSV stands for "comma-separated values".)
@@ -17,17 +26,19 @@
 cities = []
 
 def cityreader(cities=[]):
-  # TODO Implement the functionality to read from the 'cities.csv' file
-  # For each city record, create a new City instance and add it to the 
-  # `cities` list
+  with open('./src/cityreader/cities.csv') as csvfile:
+    next(csvfile)
+    citylist = csv.reader(csvfile)
+    for row in citylist:
+      cities.append(City(row[0], float(row[3]), float(row[4])))
     
-    return cities
+  return cities
 
-cityreader(cities)
+# cityreader(cities)
 
-# Print the list of cities (name, lat, lon), 1 record per line.
-for c in cities:
-    print(c)
+# # # Print the list of cities (name, lat, lon), 1 record per line.
+# for c in cities:
+#     print(c)
 
 # STRETCH GOAL!
 #
@@ -43,7 +54,7 @@ for c in cities:
 # the input data so that it's always one or the other, then search for cities.
 # In the example below, inputting 32, -120 first and then 45, -100 should not
 # change the results of what the `cityreader_stretch` function returns.
-#
+  
 # Example I/O:
 #
 # Enter lat1,lon1: 45,-100
@@ -63,6 +74,16 @@ for c in cities:
 def cityreader_stretch(lat1, lon1, lat2, lon2, cities=[]):
   # within will hold the cities that fall within the specified region
   within = []
+  float(lat1)
+  float(lat2)
+  float(lon1)
+  float(lon2)
+
+  for x in cities:
+    if x.lat > lat1 and x.lon < lon1:
+      within.append(x)
+    elif x.lat > lat2 and x.lon > lon2:
+      within.append(x)
 
   # TODO Ensure that the lat and lon valuse are all floats
   # Go through each city and check to see if it falls within 
